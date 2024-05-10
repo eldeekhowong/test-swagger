@@ -1,0 +1,2735 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "48e Experience API",
+    "version": "1.0"
+  },
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/CreditApplications": {
+      "get": {
+        "operationId": "Retrieves a list of credit applications modified within a date range, only includes attachment MetaData",
+        "description": "Retrieve a list of credit applications modified within a date range, only includes attachment MetaData",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "startdatetime",
+            "description": "Beginning of search range. Time should be in GMT format",
+            "required": true,
+            "in": "query",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "enddatetime",
+            "description": "End of search range. Time should be in GMT format.",
+            "required": true,
+            "in": "query",
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/array_application_dataType"
+            }
+          },
+          "400": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Maximum of 4000 Salesforce IDs exceeded"
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Records not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Bad response from authorization server, or WSDL SOAP Fault error",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Server error"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid client application credentials"
+          }
+        }
+      }
+    },
+    "/CreditApplications/{ControlNumber}": {
+      "get": {
+        "operationId": "Retrieve a list of credit applications of an exact Control Number, only includes attachment MetaData",
+        "description": "Retrieve a list of credit applications of an exact Control Number, only includes attachment MetaData",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ControlNumber",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "$ref": "#/definitions/application_dataType"
+            }
+          },
+          "400": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Bad request"
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Record not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Bad response from authorization server, or WSDL SOAP Fault error",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Server error"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid client application credentials"
+          }
+        }
+      }
+    },
+    "/CreditApplications/{ControlNumber}/Attachments/{AttachmentId}": {
+      "get": {
+        "description": "Retrieve an attachment for an application based on AttachmentId",
+        "produces": [
+          "binary/octet-stream",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "ControlNumber",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "AttachmentId",
+            "required": true,
+            "in": "path",
+            "type": "string"
+          },
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "binary/octet-stream",
+            "schema": {}
+          },
+          "400": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Bad request"
+              }
+            }
+          },
+          "404": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Document not found"
+              }
+            }
+          },
+          "500": {
+            "description": "Bad response from authorization server, or WSDL SOAP Fault error",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "message": "Server error"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid client application credentials"
+          }
+        }
+      }
+    },
+    "/healthcheck": {
+      "get": {
+        "description": "Retrieves a message from this API to verify conectivty and health.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "48e-eapi": {
+                  "Status": "Running",
+                  "Timestamp": "2024-02-23T20:44:03.543Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid client application credentials"
+          },
+          "500": {
+            "description": "Bad response from authorization server, or WSDL SOAP Fault error"
+          }
+        }
+      }
+    },
+    "/healthcheck/deep": {
+      "get": {
+        "description": "Retrieves a message from this API, downstream APIs and Salesforce to verify conectivty and health.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "client_id",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "client_secret",
+            "required": true,
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "x-amf-mediaType": "application/json",
+            "schema": {
+              "example": {
+                "48e-eapi": {
+                  "Status": "Running",
+                  "Timestamp": "2024-02-23T20:44:03.543Z"
+                },
+                "48e-papi": {
+                  "Status": "Running",
+                  "Timestamp": "2024-02-23T20:44:03.608Z"
+                },
+                "Salesforce": {
+                  "Status": "Connected",
+                  "Timestamp": "2024-02-23T20:44:07.556Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized or invalid client application credentials"
+          },
+          "500": {
+            "description": "Bad response from authorization server, or WSDL SOAP Fault error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "array_application_dataType": {
+      "example": {
+        "results": [
+          {
+            "application": {
+              "attachments": [
+                {
+                  "id": "0053S0000028bMwQAI",
+                  "name": "",
+                  "extension": "pdf",
+                  "size": 9000,
+                  "createdDate": "2016-02-28T16:41:41.090Z",
+                  "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                }
+              ],
+              "controlNumber": "465881347",
+              "applicationForAllocation": {
+                "applicationForAllocationId": "a0P3S00000A2XgdUAF",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                "applicationDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "status": "Under Review",
+                "applicationStage": "Application for Allocation",
+                "categoryType": "Category 1",
+                "subCategory": "1b",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "applicationReceivedMonth": "October",
+                "underRejectionApproval": false,
+                "withdrawRequestDatetime": "2023-10-20T14:49:02.000+0000",
+                "withdrawnByApplicant": false,
+                "hasRtc": false,
+                "automatedReview": true,
+                "automatedReviewDesc": "6 Zip Code doesn't match facility address.",
+                "rejectionReason": "Not a Qualified Low-Income Residential Building",
+                "potentialIneligibility": false,
+                "qaQc": false,
+                "geographicValidationDescription": "",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Allocation Approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "Concur",
+                  "batchReviewedByIRS": true
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "facilityDetails": {
+                  "projectName": "Example QA",
+                  "facilityAddress": {
+                    "facilityAddress": "654 Apple st",
+                    "facilityAddressLine2": "STE 1",
+                    "facilityCity": "Crowley",
+                    "facilityCountry": "United States",
+                    "facilityState": "Texas",
+                    "facilityZip": "76048",
+                    "urbanizationPuertoRicoOnly": "",
+                    "facilityLocation": {
+                      "latitude": 22.76543,
+                      "longitude": 23.87651
+                    }
+                  },
+                  "technologyType": "Solar Energy Facility",
+                  "doesThisFacilityIncludeStorage": "No",
+                  "facilityNameplateCapacityKWAC": 11,
+                  "facilityNameplateCapacityKWDc": 11,
+                  "storageNameplatePowerRatingKW": 11,
+                  "storageNameplateEnergyCapacityKWh": 11,
+                  "customerOfftakerType": "Single Family Residential",
+                  "customerOfftakerTypeOtherExplanation": "",
+                  "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                  "pointOfInterconnection": "Behind the meter",
+                  "additionalSelectionCriteria": "Facility is owned by a Tribal Enterprise;Facility is owned by an Alaska Native Corporation"
+                },
+                "applyingContact": {
+                  "contact": {
+                    "contactId": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton",
+                    "email": "exchange_applicant1@hq.doe.gov",
+                    "backupFirstName": "",
+                    "backupLastName": "",
+                    "backupEmail": ""
+                  },
+                  "origContact": {
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton"
+                  }
+                },
+                "applyingOrganization": {
+                  "organization": {
+                    "id": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "eligibleForDirectPayment": false,
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  },
+                  "originalApplyingOrg": {
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  }
+                },
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              },
+              "placedInService": {
+                "attachments": [
+                  {
+                    "id": "0053S0000028bMwQAI",
+                    "name": "Letter",
+                    "extension": "pdf",
+                    "size": 3096,
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                  }
+                ],
+                "placedInServiceId": "0053S0000028bMwQAI",
+                "placedInServiceName": "REQ-465881347",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                "status": "Under Review",
+                "technologyType": "Solar Energy Facility",
+                "doesThisFacilityIncludeStorage": "Yes",
+                "facilityNameplateCapacityKWAc": 1,
+                "facilityNameplateCapacityKWDc": 1,
+                "storageNameplateEnergyCapacityKWh": 10,
+                "storageNameplatePowerRatingKW": 10,
+                "placedInServiceDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "pisSubmittedDate": "2024-01-04",
+                "reasonForRejection": "Not a Qualified Low-Income Residential Building",
+                "reductionFactor": 100,
+                "underRejectionApproval": false,
+                "category": "Category 1",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Tax credit not approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "",
+                  "batchReviewedByIRS": false
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "application": {
+              "attachments": [
+                {
+                  "id": "0053S0000028bMwQAI",
+                  "name": "Letter",
+                  "extension": "pdf",
+                  "size": 3096,
+                  "createdDate": "2016-02-28T16:41:41.090Z",
+                  "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                }
+              ],
+              "controlNumber": "465881347",
+              "applicationForAllocation": {
+                "applicationForAllocationId": "a0P3S00000A2XgdUAF",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                "applicationDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "status": "Under Review",
+                "applicationStage": "Application for Allocation",
+                "categoryType": "Category 1",
+                "subCategory": "1b",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "applicationReceivedMonth": "October",
+                "underRejectionApproval": false,
+                "withdrawRequestDatetime": "2023-10-20T14:49:02.000+0000",
+                "withdrawnByApplicant": false,
+                "hasRtc": false,
+                "automatedReview": true,
+                "automatedReviewDesc": "6 Zip Code doesn't match facility address.",
+                "rejectionReason": "Not a Qualified Low-Income Residential Building",
+                "potentialIneligibility": false,
+                "qaQc": false,
+                "geographicValidationDescription": "",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Allocation Approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "Concur",
+                  "batchReviewedByIRS": true
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "facilityDetails": {
+                  "projectName": "Example QA",
+                  "facilityAddress": {
+                    "facilityAddress": "654 Apple st",
+                    "facilityAddressLine2": "STE 1",
+                    "facilityCity": "Crowley",
+                    "facilityCountry": "United States",
+                    "facilityState": "Texas",
+                    "facilityZip": "76048",
+                    "urbanizationPuertoRicoOnly": "",
+                    "facilityLocation": {
+                      "latitude": 22.76543,
+                      "longitude": 23.87651
+                    }
+                  },
+                  "technologyType": "Solar Energy Facility",
+                  "doesThisFacilityIncludeStorage": "No",
+                  "facilityNameplateCapacityKWAC": 11,
+                  "facilityNameplateCapacityKWDc": 11,
+                  "storageNameplatePowerRatingKW": 11,
+                  "storageNameplateEnergyCapacityKWh": 11,
+                  "customerOfftakerType": "Single Family Residential",
+                  "customerOfftakerTypeOtherExplanation": "",
+                  "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                  "pointOfInterconnection": "Behind the meter",
+                  "additionalSelectionCriteria": "Facility is owned by a Tribal Enterprise;Facility is owned by an Alaska Native Corporation"
+                },
+                "applyingContact": {
+                  "contact": {
+                    "contactId": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton",
+                    "email": "exchange_applicant1@hq.doe.gov",
+                    "backupFirstName": "",
+                    "backupLastName": "",
+                    "backupEmail": ""
+                  },
+                  "origContact": {
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton"
+                  }
+                },
+                "applyingOrganization": {
+                  "organization": {
+                    "id": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "eligibleForDirectPayment": false,
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  },
+                  "originalApplyingOrg": {
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  }
+                },
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              },
+              "placedInService": {
+                "attachments": [
+                  {
+                    "id": "0053S0000028bMwQAI",
+                    "name": "Letter",
+                    "extension": "pdf",
+                    "size": 3096,
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                  }
+                ],
+                "placedInServiceId": "0053S0000028bMwQAI",
+                "placedInServiceName": "REQ-465881347",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                "status": "Under Review",
+                "technologyType": "Solar Energy Facility",
+                "doesThisFacilityIncludeStorage": "Yes",
+                "facilityNameplateCapacityKWAc": 1,
+                "facilityNameplateCapacityKWDc": 1,
+                "storageNameplateEnergyCapacityKWh": 10,
+                "storageNameplatePowerRatingKW": 10,
+                "placedInServiceDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "pisSubmittedDate": "2024-01-04",
+                "reasonForRejection": "Not a Qualified Low-Income Residential Building",
+                "reductionFactor": 100,
+                "underRejectionApproval": false,
+                "category": "Category 1",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Tax credit not approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "",
+                  "batchReviewedByIRS": false
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "application": {
+              "attachments": [
+                {
+                  "id": "0053S0000028bMwQAI",
+                  "name": "Letter",
+                  "extension": "pdf",
+                  "size": 3096,
+                  "createdDate": "2016-02-28T16:41:41.090Z",
+                  "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                }
+              ],
+              "controlNumber": "465881347",
+              "applicationForAllocation": {
+                "applicationForAllocationId": "a0P3S00000A2XgdUAF",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                "applicationDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "status": "Under Review",
+                "applicationStage": "Application for Allocation",
+                "categoryType": "Category 1",
+                "subCategory": "1b",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "applicationReceivedMonth": "October",
+                "underRejectionApproval": false,
+                "withdrawRequestDatetime": "2023-10-20T14:49:02.000+0000",
+                "withdrawnByApplicant": false,
+                "hasRtc": false,
+                "automatedReview": true,
+                "automatedReviewDesc": "6 Zip Code doesn't match facility address.",
+                "rejectionReason": "Not a Qualified Low-Income Residential Building",
+                "potentialIneligibility": false,
+                "qaQc": false,
+                "geographicValidationDescription": "",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Allocation Approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "Concur",
+                  "batchReviewedByIRS": true
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "facilityDetails": {
+                  "projectName": "Example QA",
+                  "facilityAddress": {
+                    "facilityAddress": "654 Apple st",
+                    "facilityAddressLine2": "STE 1",
+                    "facilityCity": "Crowley",
+                    "facilityCountry": "United States",
+                    "facilityState": "Texas",
+                    "facilityZip": "76048",
+                    "urbanizationPuertoRicoOnly": "",
+                    "facilityLocation": {
+                      "latitude": 22.76543,
+                      "longitude": 23.87651
+                    }
+                  },
+                  "technologyType": "Solar Energy Facility",
+                  "doesThisFacilityIncludeStorage": "No",
+                  "facilityNameplateCapacityKWAC": 11,
+                  "facilityNameplateCapacityKWDc": 11,
+                  "storageNameplatePowerRatingKW": 11,
+                  "storageNameplateEnergyCapacityKWh": 11,
+                  "customerOfftakerType": "Single Family Residential",
+                  "customerOfftakerTypeOtherExplanation": "",
+                  "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                  "pointOfInterconnection": "Behind the meter",
+                  "additionalSelectionCriteria": "Facility is owned by a Tribal Enterprise;Facility is owned by an Alaska Native Corporation"
+                },
+                "applyingContact": {
+                  "contact": {
+                    "contactId": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton",
+                    "email": "exchange_applicant1@hq.doe.gov",
+                    "backupFirstName": "",
+                    "backupLastName": "",
+                    "backupEmail": ""
+                  },
+                  "origContact": {
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton"
+                  }
+                },
+                "applyingOrganization": {
+                  "organization": {
+                    "id": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "eligibleForDirectPayment": false,
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  },
+                  "originalApplyingOrg": {
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  }
+                },
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              },
+              "placedInService": {
+                "attachments": [
+                  {
+                    "id": "0053S0000028bMwQAI",
+                    "name": "Letter",
+                    "extension": "pdf",
+                    "size": 3096,
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                  }
+                ],
+                "placedInServiceId": "0053S0000028bMwQAI",
+                "placedInServiceName": "REQ-465881347",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                "status": "Under Review",
+                "technologyType": "Solar Energy Facility",
+                "doesThisFacilityIncludeStorage": "Yes",
+                "facilityNameplateCapacityKWAc": 1,
+                "facilityNameplateCapacityKWDc": 1,
+                "storageNameplateEnergyCapacityKWh": 10,
+                "storageNameplatePowerRatingKW": 10,
+                "placedInServiceDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "pisSubmittedDate": "2024-01-04",
+                "reasonForRejection": "Not a Qualified Low-Income Residential Building",
+                "reductionFactor": 100,
+                "underRejectionApproval": false,
+                "category": "Category 1",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Tax credit not approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "",
+                  "batchReviewedByIRS": false
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "application": {
+              "attachments": [
+                {
+                  "id": "0053S0000028bMwQAI",
+                  "name": "Letter",
+                  "extension": "pdf",
+                  "size": 3096,
+                  "createdDate": "2016-02-28T16:41:41.090Z",
+                  "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                }
+              ],
+              "controlNumber": "465881347",
+              "applicationForAllocation": {
+                "applicationForAllocationId": "a0P3S00000A2XgdUAF",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                "applicationDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "status": "Under Review",
+                "applicationStage": "Application for Allocation",
+                "categoryType": "Category 1",
+                "subCategory": "1b",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "applicationReceivedMonth": "October",
+                "underRejectionApproval": false,
+                "withdrawRequestDatetime": "2023-10-20T14:49:02.000+0000",
+                "withdrawnByApplicant": false,
+                "hasRtc": false,
+                "automatedReview": true,
+                "automatedReviewDesc": "6 Zip Code doesn't match facility address.",
+                "rejectionReason": "Not a Qualified Low-Income Residential Building",
+                "potentialIneligibility": false,
+                "qaQc": false,
+                "geographicValidationDescription": "",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Allocation Approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "Concur",
+                  "batchReviewedByIRS": true
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "facilityDetails": {
+                  "projectName": "Example QA",
+                  "facilityAddress": {
+                    "facilityAddress": "654 Apple st",
+                    "facilityAddressLine2": "STE 1",
+                    "facilityCity": "Crowley",
+                    "facilityCountry": "United States",
+                    "facilityState": "Texas",
+                    "facilityZip": "76048",
+                    "urbanizationPuertoRicoOnly": "",
+                    "facilityLocation": {
+                      "latitude": 22.76543,
+                      "longitude": 23.87651
+                    }
+                  },
+                  "technologyType": "Solar Energy Facility",
+                  "doesThisFacilityIncludeStorage": "No",
+                  "facilityNameplateCapacityKWAC": 11,
+                  "facilityNameplateCapacityKWDc": 11,
+                  "storageNameplatePowerRatingKW": 11,
+                  "storageNameplateEnergyCapacityKWh": 11,
+                  "customerOfftakerType": "Single Family Residential",
+                  "customerOfftakerTypeOtherExplanation": "",
+                  "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                  "pointOfInterconnection": "Behind the meter",
+                  "additionalSelectionCriteria": "Facility is owned by a Tribal Enterprise;Facility is owned by an Alaska Native Corporation"
+                },
+                "applyingContact": {
+                  "contact": {
+                    "contactId": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton",
+                    "email": "exchange_applicant1@hq.doe.gov",
+                    "backupFirstName": "",
+                    "backupLastName": "",
+                    "backupEmail": ""
+                  },
+                  "origContact": {
+                    "salutation": "Mr.",
+                    "firstName": "Daniel",
+                    "lastName": "Minton"
+                  }
+                },
+                "applyingOrganization": {
+                  "organization": {
+                    "id": "0053S0000028bMwQAI",
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "eligibleForDirectPayment": false,
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  },
+                  "originalApplyingOrg": {
+                    "organizationName": "UAT Testing Organization",
+                    "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                    "organizationPhone": "1236547899",
+                    "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                    "organizationType": "Government Owned and Operated (GOGO)",
+                    "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                    "organizationAddress": {
+                      "organizationAddress": "123 West Ave",
+                      "organizationAddress2": "",
+                      "organizationCity": "Seattle",
+                      "organizationStateProvinceRegion": "Washington",
+                      "organizationZip": "78945",
+                      "organizationCountry": "United States",
+                      "organizationUrbanization": "example"
+                    },
+                    "identifiers": {
+                      "ein": "559486175",
+                      "tin": "149675892",
+                      "ueiNumber": "123000000000"
+                    },
+                    "parentOrganization": {
+                      "parentOrganization": "Space Company",
+                      "identifiers": {
+                        "tin": "149675892"
+                      }
+                    }
+                  }
+                },
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              },
+              "placedInService": {
+                "attachments": [
+                  {
+                    "id": "0053S0000028bMwQAI",
+                    "name": "Letter",
+                    "extension": "pdf",
+                    "size": 3096,
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                  }
+                ],
+                "placedInServiceId": "0053S0000028bMwQAI",
+                "placedInServiceName": "REQ-465881347",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                "status": "Under Review",
+                "technologyType": "Solar Energy Facility",
+                "doesThisFacilityIncludeStorage": "Yes",
+                "facilityNameplateCapacityKWAc": 1,
+                "facilityNameplateCapacityKWDc": 1,
+                "storageNameplateEnergyCapacityKWh": 10,
+                "storageNameplatePowerRatingKW": 10,
+                "placedInServiceDate": "2024-01-04",
+                "awardedDate": "2024-01-04",
+                "pisSubmittedDate": "2024-01-04",
+                "reasonForRejection": "Not a Qualified Low-Income Residential Building",
+                "reductionFactor": 100,
+                "underRejectionApproval": false,
+                "category": "Category 1",
+                "applicationOption": "Eligible Residential BehindTheMeterBTM",
+                "irsReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Tax credit not approved",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "irsBatchReview": "",
+                  "batchReviewedByIRS": false
+                },
+                "nrelReview": {
+                  "examinerId": "0053S000002BVC2QAO",
+                  "examinerName": "John Smith",
+                  "recommendation": "Recommend Rejection",
+                  "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+                  "dueDate": "2024-01-04",
+                  "nrelBatchReview": "",
+                  "batchReviewedByDOE": false
+                },
+                "reviewDetails": [
+                  {
+                    "reviewId": "0053S000002BVK2AA1",
+                    "reviewerId": "001OD000005U4YMKV1",
+                    "createdDate": "2023-12-05T19:25:22.670972Z",
+                    "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                    "reviewName": "006168984 NREL Review",
+                    "reviewer": "John Smith",
+                    "reviewStatus": "Batch Reviewed",
+                    "submittedDate": "2023-11-03T14:05:21.640179Z",
+                    "comments": "This is a comment"
+                  }
+                ],
+                "requirements": [
+                  {
+                    "requirementId": "0053S000002BVC2QAO",
+                    "attachments": [
+                      {
+                        "id": "0053S0000028bMwQAI",
+                        "name": "Letter",
+                        "extension": "pdf",
+                        "size": 3096,
+                        "createdDate": "2016-02-28T16:41:41.090Z",
+                        "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                      }
+                    ],
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                    "relatedEntity": "Credit Application",
+                    "completedDate": "2024-01-04",
+                    "dueDate": "2024-01-04",
+                    "requirements": "You only uploaded a selfie, please upload real information.",
+                    "status": "Complete",
+                    "applicantComment": "",
+                    "dateFinalReminder": "2024-01-04",
+                    "dateReminder": "2024-01-04"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "type": "object",
+      "required": [
+        "results"
+      ],
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/application_dataType"
+          }
+        }
+      }
+    },
+    "application_dataType": {
+      "example": {
+        "application": {
+          "attachments": [
+            {
+              "id": "0053S0000028bMwQAI",
+              "name": "Letter",
+              "extension": "pdf",
+              "size": 3096,
+              "createdDate": "2016-02-28T16:41:41.090Z",
+              "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+            }
+          ],
+          "controlNumber": "465881347",
+          "applicationForAllocation": {
+            "applicationForAllocationId": "a0P3S00000A2XgdUAF",
+            "createdDate": "2016-02-28T16:41:41.090Z",
+            "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+            "applicationDate": "2024-01-04",
+            "awardedDate": "2024-01-04",
+            "status": "Under Review",
+            "applicationStage": "Application for Allocation",
+            "categoryType": "Category 1",
+            "subCategory": "1b",
+            "applicationOption": "Eligible Residential BehindTheMeterBTM",
+            "applicationReceivedMonth": "October",
+            "underRejectionApproval": false,
+            "withdrawRequestDatetime": "2023-10-20T14:49:02.000+0000",
+            "withdrawnByApplicant": false,
+            "hasRtc": false,
+            "automatedReview": true,
+            "automatedReviewDesc": "6 Zip Code doesn't match facility address.",
+            "rejectionReason": "Not a Qualified Low-Income Residential Building",
+            "potentialIneligibility": false,
+            "qaQc": false,
+            "geographicValidationDescription": "",
+            "irsReview": {
+              "examinerId": "0053S000002BVC2QAO",
+              "examinerName": "John Smith",
+              "recommendation": "Allocation Approved",
+              "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+              "irsBatchReview": "Concur",
+              "batchReviewedByIRS": true
+            },
+            "nrelReview": {
+              "examinerId": "0053S000002BVC2QAO",
+              "examinerName": "John Smith",
+              "recommendation": "Recommend Rejection",
+              "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+              "dueDate": "2024-01-04",
+              "nrelBatchReview": "",
+              "batchReviewedByDOE": false
+            },
+            "reviewDetails": [
+              {
+                "reviewId": "0053S000002BVK2AA1",
+                "reviewerId": "001OD000005U4YMKV1",
+                "createdDate": "2023-12-05T19:25:22.670972Z",
+                "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                "reviewName": "006168984 NREL Review",
+                "reviewer": "John Smith",
+                "reviewStatus": "Batch Reviewed",
+                "submittedDate": "2023-11-03T14:05:21.640179Z",
+                "comments": "This is a comment"
+              }
+            ],
+            "facilityDetails": {
+              "projectName": "Example QA",
+              "facilityAddress": {
+                "facilityAddress": "654 Apple st",
+                "facilityAddressLine2": "STE 1",
+                "facilityCity": "Crowley",
+                "facilityCountry": "United States",
+                "facilityState": "Texas",
+                "facilityZip": "76048",
+                "urbanizationPuertoRicoOnly": "",
+                "facilityLocation": {
+                  "latitude": 22.76543,
+                  "longitude": 23.87651
+                }
+              },
+              "technologyType": "Solar Energy Facility",
+              "doesThisFacilityIncludeStorage": "No",
+              "facilityNameplateCapacityKWAC": 11,
+              "facilityNameplateCapacityKWDc": 11,
+              "storageNameplatePowerRatingKW": 11,
+              "storageNameplateEnergyCapacityKWh": 11,
+              "customerOfftakerType": "Single Family Residential",
+              "customerOfftakerTypeOtherExplanation": "",
+              "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+              "pointOfInterconnection": "Behind the meter",
+              "additionalSelectionCriteria": "Facility is owned by a Tribal Enterprise;Facility is owned by an Alaska Native Corporation"
+            },
+            "applyingContact": {
+              "contact": {
+                "contactId": "0053S0000028bMwQAI",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                "salutation": "Mr.",
+                "firstName": "Daniel",
+                "lastName": "Minton",
+                "email": "exchange_applicant1@hq.doe.gov",
+                "backupFirstName": "",
+                "backupLastName": "",
+                "backupEmail": ""
+              },
+              "origContact": {
+                "salutation": "Mr.",
+                "firstName": "Daniel",
+                "lastName": "Minton"
+              }
+            },
+            "applyingOrganization": {
+              "organization": {
+                "id": "0053S0000028bMwQAI",
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-11-24T19:54:29.000+0000",
+                "organizationName": "UAT Testing Organization",
+                "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                "organizationPhone": "1236547899",
+                "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                "organizationType": "Government Owned and Operated (GOGO)",
+                "organizationAddress": {
+                  "organizationAddress": "123 West Ave",
+                  "organizationAddress2": "",
+                  "organizationCity": "Seattle",
+                  "organizationStateProvinceRegion": "Washington",
+                  "organizationZip": "78945",
+                  "organizationCountry": "United States",
+                  "organizationUrbanization": "example"
+                },
+                "identifiers": {
+                  "ein": "559486175",
+                  "tin": "149675892",
+                  "ueiNumber": "123000000000"
+                },
+                "eligibleForDirectPayment": false,
+                "parentOrganization": {
+                  "parentOrganization": "Space Company",
+                  "identifiers": {
+                    "tin": "149675892"
+                  }
+                }
+              },
+              "originalApplyingOrg": {
+                "organizationName": "UAT Testing Organization",
+                "organizationEmail": "gelila.kebede@hq.doe.gov.invalid",
+                "organizationPhone": "1236547899",
+                "organizationWebsite": "[https://48c-exchanged.energy.gov/](https://48c-exchanged.energy.gov/)",
+                "organizationType": "Government Owned and Operated (GOGO)",
+                "ownershipModelAllCategories": "The applicant is the owner of the energy facility and will not have contracts or subscriptions with separate customers/offtakers",
+                "organizationAddress": {
+                  "organizationAddress": "123 West Ave",
+                  "organizationAddress2": "",
+                  "organizationCity": "Seattle",
+                  "organizationStateProvinceRegion": "Washington",
+                  "organizationZip": "78945",
+                  "organizationCountry": "United States",
+                  "organizationUrbanization": "example"
+                },
+                "identifiers": {
+                  "ein": "559486175",
+                  "tin": "149675892",
+                  "ueiNumber": "123000000000"
+                },
+                "parentOrganization": {
+                  "parentOrganization": "Space Company",
+                  "identifiers": {
+                    "tin": "149675892"
+                  }
+                }
+              }
+            },
+            "requirements": [
+              {
+                "requirementId": "0053S000002BVC2QAO",
+                "attachments": [
+                  {
+                    "id": "0053S0000028bMwQAI",
+                    "name": "Letter",
+                    "extension": "pdf",
+                    "size": 3096,
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                  }
+                ],
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                "relatedEntity": "Credit Application",
+                "completedDate": "2024-01-04",
+                "dueDate": "2024-01-04",
+                "requirements": "You only uploaded a selfie, please upload real information.",
+                "status": "Complete",
+                "applicantComment": "",
+                "dateFinalReminder": "2024-01-04",
+                "dateReminder": "2024-01-04"
+              }
+            ]
+          },
+          "placedInService": {
+            "attachments": [
+              {
+                "id": "0053S0000028bMwQAI",
+                "name": "Letter",
+                "extension": "pdf",
+                "size": 3096,
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+              }
+            ],
+            "placedInServiceId": "0053S0000028bMwQAI",
+            "placedInServiceName": "REQ-465881347",
+            "createdDate": "2016-02-28T16:41:41.090Z",
+            "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+            "status": "Under Review",
+            "technologyType": "Solar Energy Facility",
+            "doesThisFacilityIncludeStorage": "Yes",
+            "facilityNameplateCapacityKWAc": 1,
+            "facilityNameplateCapacityKWDc": 1,
+            "storageNameplateEnergyCapacityKWh": 10,
+            "storageNameplatePowerRatingKW": 10,
+            "placedInServiceDate": "2024-01-04",
+            "awardedDate": "2024-01-04",
+            "pisSubmittedDate": "2024-01-04",
+            "reasonForRejection": "Not a Qualified Low-Income Residential Building",
+            "reductionFactor": 100,
+            "underRejectionApproval": false,
+            "category": "Category 1",
+            "applicationOption": "Eligible Residential BehindTheMeterBTM",
+            "irsReview": {
+              "examinerId": "0053S000002BVC2QAO",
+              "examinerName": "John Smith",
+              "recommendation": "Tax credit not approved",
+              "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+              "irsBatchReview": "",
+              "batchReviewedByIRS": false
+            },
+            "nrelReview": {
+              "examinerId": "0053S000002BVC2QAO",
+              "examinerName": "John Smith",
+              "recommendation": "Recommend Rejection",
+              "recommendationDatetime": "2023-12-05T19:25:22.670972Z",
+              "dueDate": "2024-01-04",
+              "nrelBatchReview": "",
+              "batchReviewedByDOE": false
+            },
+            "reviewDetails": [
+              {
+                "reviewId": "0053S000002BVK2AA1",
+                "reviewerId": "001OD000005U4YMKV1",
+                "createdDate": "2023-12-05T19:25:22.670972Z",
+                "lastModifiedDate": "2023-12-15T23:22:21.570471Z",
+                "reviewName": "006168984 NREL Review",
+                "reviewer": "John Smith",
+                "reviewStatus": "Batch Reviewed",
+                "submittedDate": "2023-11-03T14:05:21.640179Z",
+                "comments": "This is a comment"
+              }
+            ],
+            "requirements": [
+              {
+                "requirementId": "0053S000002BVC2QAO",
+                "attachments": [
+                  {
+                    "id": "0053S0000028bMwQAI",
+                    "name": "Letter",
+                    "extension": "pdf",
+                    "size": 3096,
+                    "createdDate": "2016-02-28T16:41:41.090Z",
+                    "lastModifiedDate": "2016-02-28T16:41:41.090Z"
+                  }
+                ],
+                "createdDate": "2016-02-28T16:41:41.090Z",
+                "lastModifiedDate": "2023-10-20T14:49:02.000+0000",
+                "relatedEntity": "Credit Application",
+                "completedDate": "2024-01-04",
+                "dueDate": "2024-01-04",
+                "requirements": "You only uploaded a selfie, please upload real information.",
+                "status": "Complete",
+                "applicantComment": "",
+                "dateFinalReminder": "2024-01-04",
+                "dateReminder": "2024-01-04"
+              }
+            ]
+          }
+        }
+      },
+      "type": "object",
+      "required": [
+        "application"
+      ],
+      "properties": {
+        "application": {
+          "type": "object",
+          "required": [
+            "attachments",
+            "controlNumber",
+            "applicationForAllocation",
+            "placedInService"
+          ],
+          "properties": {
+            "attachments": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "id",
+                  "name",
+                  "size",
+                  "createdDate",
+                  "lastModifiedDate"
+                ],
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "extension": {
+                    "type": "string"
+                  },
+                  "size": {
+                    "type": "number"
+                  },
+                  "createdDate": {
+                    "type": "string"
+                  },
+                  "lastModifiedDate": {
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "controlNumber": {
+              "type": "string"
+            },
+            "applicationForAllocation": {
+              "type": "object",
+              "required": [
+                "applicationForAllocationId",
+                "createdDate",
+                "lastModifiedDate",
+                "applicationDate",
+                "categoryType",
+                "applicationOption",
+                "underRejectionApproval",
+                "withdrawnByApplicant",
+                "hasRtc",
+                "automatedReview",
+                "automatedReviewDesc",
+                "potentialIneligibility",
+                "qaQc",
+                "irsReview",
+                "nrelReview",
+                "reviewDetails",
+                "facilityDetails",
+                "applyingContact",
+                "applyingOrganization",
+                "requirements"
+              ],
+              "properties": {
+                "applicationForAllocationId": {
+                  "type": "string"
+                },
+                "createdDate": {
+                  "type": "string"
+                },
+                "lastModifiedDate": {
+                  "type": "string"
+                },
+                "applicationDate": {
+                  "type": "string"
+                },
+                "awardedDate": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "applicationStage": {
+                  "type": "string"
+                },
+                "categoryType": {
+                  "type": "string"
+                },
+                "subCategory": {
+                  "type": "string"
+                },
+                "applicationOption": {
+                  "type": "string"
+                },
+                "applicationReceivedMonth": {
+                  "type": "string"
+                },
+                "underRejectionApproval": {
+                  "type": "boolean"
+                },
+                "withdrawRequestDatetime": {
+                  "type": "string"
+                },
+                "withdrawnByApplicant": {
+                  "type": "boolean"
+                },
+                "hasRtc": {
+                  "type": "boolean"
+                },
+                "automatedReview": {
+                  "type": "boolean"
+                },
+                "automatedReviewDesc": {
+                  "type": "string"
+                },
+                "rejectionReason": {
+                  "type": "string"
+                },
+                "potentialIneligibility": {
+                  "type": "boolean"
+                },
+                "qaQc": {
+                  "type": "boolean"
+                },
+                "geographicValidationDescription": {
+                  "type": "string"
+                },
+                "irsReview": {
+                  "type": "object",
+                  "required": [
+                    "examinerId",
+                    "examinerName",
+                    "batchReviewedByIRS"
+                  ],
+                  "properties": {
+                    "examinerId": {
+                      "type": "string"
+                    },
+                    "examinerName": {
+                      "type": "string"
+                    },
+                    "recommendation": {
+                      "type": "string"
+                    },
+                    "recommendationDatetime": {
+                      "type": "string"
+                    },
+                    "irsBatchReview": {
+                      "type": "string"
+                    },
+                    "batchReviewedByIRS": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "nrelReview": {
+                  "type": "object",
+                  "required": [
+                    "examinerId",
+                    "examinerName",
+                    "batchReviewedByDOE"
+                  ],
+                  "properties": {
+                    "examinerId": {
+                      "type": "string"
+                    },
+                    "examinerName": {
+                      "type": "string"
+                    },
+                    "recommendation": {
+                      "type": "string"
+                    },
+                    "dueDate": {
+                      "type": "string"
+                    },
+                    "recommendationDatetime": {
+                      "type": "string"
+                    },
+                    "nrelBatchReview": {
+                      "type": "string"
+                    },
+                    "batchReviewedByDOE": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "reviewDetails": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "reviewId",
+                      "reviewerId",
+                      "createdDate",
+                      "lastModifiedDate",
+                      "reviewName",
+                      "reviewer"
+                    ],
+                    "properties": {
+                      "reviewId": {
+                        "type": "string"
+                      },
+                      "reviewerId": {
+                        "type": "string"
+                      },
+                      "createdDate": {
+                        "type": "string"
+                      },
+                      "lastModifiedDate": {
+                        "type": "string"
+                      },
+                      "reviewName": {
+                        "type": "string"
+                      },
+                      "reviewer": {
+                        "type": "string"
+                      },
+                      "reviewStatus": {
+                        "type": "string"
+                      },
+                      "submittedDate": {
+                        "type": "string"
+                      },
+                      "comments": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "facilityDetails": {
+                  "type": "object",
+                  "required": [
+                    "facilityAddress"
+                  ],
+                  "properties": {
+                    "projectName": {
+                      "type": "string"
+                    },
+                    "facilityAddress": {
+                      "type": "object",
+                      "required": [
+                        "facilityLocation"
+                      ],
+                      "properties": {
+                        "facilityAddress": {
+                          "type": "string"
+                        },
+                        "facilityAddressLine2": {
+                          "type": "string"
+                        },
+                        "facilityCity": {
+                          "type": "string"
+                        },
+                        "facilityCountry": {
+                          "type": "string"
+                        },
+                        "facilityState": {
+                          "type": "string"
+                        },
+                        "facilityZip": {
+                          "type": "string"
+                        },
+                        "urbanizationPuertoRicoOnly": {
+                          "type": "string"
+                        },
+                        "facilityLocation": {
+                          "type": "object",
+                          "properties": {
+                            "latitude": {
+                              "type": "number"
+                            },
+                            "longitude": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "technologyType": {
+                      "type": "string"
+                    },
+                    "doesThisFacilityIncludeStorage": {
+                      "type": "string"
+                    },
+                    "facilityNameplateCapacityKWAC": {
+                      "type": "number"
+                    },
+                    "facilityNameplateCapacityKWDc": {
+                      "type": "number"
+                    },
+                    "storageNameplatePowerRatingKW": {
+                      "type": "number"
+                    },
+                    "storageNameplateEnergyCapacityKWh": {
+                      "type": "number"
+                    },
+                    "customerOfftakerType": {
+                      "type": "string"
+                    },
+                    "customerOfftakerTypeOtherExplanation": {
+                      "type": "string"
+                    },
+                    "ownershipModelAllCategories": {
+                      "type": "string"
+                    },
+                    "pointOfInterconnection": {
+                      "type": "string"
+                    },
+                    "additionalSelectionCriteria": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "applyingContact": {
+                  "type": "object",
+                  "required": [
+                    "contact",
+                    "origContact"
+                  ],
+                  "properties": {
+                    "contact": {
+                      "type": "object",
+                      "required": [
+                        "contactId",
+                        "createdDate",
+                        "lastModifiedDate"
+                      ],
+                      "properties": {
+                        "contactId": {
+                          "type": "string"
+                        },
+                        "createdDate": {
+                          "type": "string"
+                        },
+                        "lastModifiedDate": {
+                          "type": "string"
+                        },
+                        "salutation": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        },
+                        "email": {
+                          "type": "string"
+                        },
+                        "backupFirstName": {
+                          "type": "string"
+                        },
+                        "backupLastName": {
+                          "type": "string"
+                        },
+                        "backupEmail": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "origContact": {
+                      "type": "object",
+                      "properties": {
+                        "salutation": {
+                          "type": "string"
+                        },
+                        "firstName": {
+                          "type": "string"
+                        },
+                        "lastName": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "applyingOrganization": {
+                  "type": "object",
+                  "required": [
+                    "organization",
+                    "originalApplyingOrg"
+                  ],
+                  "properties": {
+                    "organization": {
+                      "type": "object",
+                      "required": [
+                        "id",
+                        "createdDate",
+                        "lastModifiedDate",
+                        "organizationName",
+                        "organizationAddress",
+                        "identifiers",
+                        "eligibleForDirectPayment",
+                        "parentOrganization"
+                      ],
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "createdDate": {
+                          "type": "string"
+                        },
+                        "lastModifiedDate": {
+                          "type": "string"
+                        },
+                        "organizationName": {
+                          "type": "string"
+                        },
+                        "organizationEmail": {
+                          "type": "string"
+                        },
+                        "organizationPhone": {
+                          "type": "string"
+                        },
+                        "organizationWebsite": {
+                          "type": "string"
+                        },
+                        "organizationType": {
+                          "type": "string"
+                        },
+                        "organizationAddress": {
+                          "type": "object",
+                          "properties": {
+                            "organizationAddress": {
+                              "type": "string"
+                            },
+                            "organizationAddress2": {
+                              "type": "string"
+                            },
+                            "organizationCity": {
+                              "type": "string"
+                            },
+                            "organizationStateProvinceRegion": {
+                              "type": "string"
+                            },
+                            "organizationZip": {
+                              "type": "string"
+                            },
+                            "organizationCountry": {
+                              "type": "string"
+                            },
+                            "organizationUrbanization": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "identifiers": {
+                          "type": "object",
+                          "properties": {
+                            "ein": {
+                              "type": "string"
+                            },
+                            "tin": {
+                              "type": "string"
+                            },
+                            "ueiNumber": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "eligibleForDirectPayment": {
+                          "type": "boolean"
+                        },
+                        "parentOrganization": {
+                          "type": "object",
+                          "required": [
+                            "parentOrganization",
+                            "identifiers"
+                          ],
+                          "properties": {
+                            "parentOrganization": {
+                              "type": "string"
+                            },
+                            "identifiers": {
+                              "type": "object",
+                              "properties": {
+                                "tin": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "originalApplyingOrg": {
+                      "type": "object",
+                      "required": [
+                        "organizationName",
+                        "organizationAddress",
+                        "identifiers",
+                        "parentOrganization"
+                      ],
+                      "properties": {
+                        "organizationName": {
+                          "type": "string"
+                        },
+                        "organizationEmail": {
+                          "type": "string"
+                        },
+                        "organizationPhone": {
+                          "type": "string"
+                        },
+                        "organizationWebsite": {
+                          "type": "string"
+                        },
+                        "organizationType": {
+                          "type": "string"
+                        },
+                        "ownershipModelAllCategories": {
+                          "type": "string"
+                        },
+                        "organizationAddress": {
+                          "type": "object",
+                          "properties": {
+                            "organizationAddress": {
+                              "type": "string"
+                            },
+                            "organizationAddress2": {
+                              "type": "string"
+                            },
+                            "organizationCity": {
+                              "type": "string"
+                            },
+                            "organizationStateProvinceRegion": {
+                              "type": "string"
+                            },
+                            "organizationZip": {
+                              "type": "string"
+                            },
+                            "organizationCountry": {
+                              "type": "string"
+                            },
+                            "organizationUrbanization": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "identifiers": {
+                          "type": "object",
+                          "properties": {
+                            "ein": {
+                              "type": "string"
+                            },
+                            "tin": {
+                              "type": "string"
+                            },
+                            "ueiNumber": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "parentOrganization": {
+                          "type": "object",
+                          "required": [
+                            "parentOrganization",
+                            "identifiers"
+                          ],
+                          "properties": {
+                            "parentOrganization": {
+                              "type": "string"
+                            },
+                            "identifiers": {
+                              "type": "object",
+                              "properties": {
+                                "tin": {
+                                  "type": "string"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "requirements": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "requirementId",
+                      "attachments",
+                      "createdDate",
+                      "lastModifiedDate"
+                    ],
+                    "properties": {
+                      "requirementId": {
+                        "type": "string"
+                      },
+                      "attachments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name",
+                            "size",
+                            "createdDate",
+                            "lastModifiedDate"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "extension": {
+                              "type": "string"
+                            },
+                            "size": {
+                              "type": "number"
+                            },
+                            "createdDate": {
+                              "type": "string"
+                            },
+                            "lastModifiedDate": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "createdDate": {
+                        "type": "string"
+                      },
+                      "lastModifiedDate": {
+                        "type": "string"
+                      },
+                      "relatedEntity": {
+                        "type": "string"
+                      },
+                      "completedDate": {
+                        "type": "string"
+                      },
+                      "dueDate": {
+                        "type": "string"
+                      },
+                      "requirements": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "applicantComment": {
+                        "type": "string"
+                      },
+                      "dateFinalReminder": {
+                        "type": "string"
+                      },
+                      "dateReminder": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "placedInService": {
+              "type": "object",
+              "required": [
+                "attachments",
+                "placedInServiceId",
+                "placedInServiceName",
+                "createdDate",
+                "lastModifiedDate",
+                "underRejectionApproval",
+                "irsReview",
+                "nrelReview",
+                "reviewDetails",
+                "requirements"
+              ],
+              "properties": {
+                "attachments": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "size",
+                      "createdDate",
+                      "lastModifiedDate"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "extension": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "number"
+                      },
+                      "createdDate": {
+                        "type": "string"
+                      },
+                      "lastModifiedDate": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "placedInServiceId": {
+                  "type": "string"
+                },
+                "placedInServiceName": {
+                  "type": "string"
+                },
+                "createdDate": {
+                  "type": "string"
+                },
+                "lastModifiedDate": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string"
+                },
+                "technologyType": {
+                  "type": "string"
+                },
+                "doesThisFacilityIncludeStorage": {
+                  "type": "string"
+                },
+                "facilityNameplateCapacityKWAc": {
+                  "type": "number"
+                },
+                "facilityNameplateCapacityKWDc": {
+                  "type": "number"
+                },
+                "storageNameplateEnergyCapacityKWh": {
+                  "type": "number"
+                },
+                "storageNameplatePowerRatingKW": {
+                  "type": "number"
+                },
+                "placedInServiceDate": {
+                  "type": "string"
+                },
+                "awardedDate": {
+                  "type": "string"
+                },
+                "pisSubmittedDate": {
+                  "type": "string"
+                },
+                "reasonForRejection": {
+                  "type": "string"
+                },
+                "reductionFactor": {
+                  "type": "number"
+                },
+                "underRejectionApproval": {
+                  "type": "boolean"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "applicationOption": {
+                  "type": "string"
+                },
+                "irsReview": {
+                  "type": "object",
+                  "required": [
+                    "examinerId",
+                    "examinerName",
+                    "batchReviewedByIRS"
+                  ],
+                  "properties": {
+                    "examinerId": {
+                      "type": "string"
+                    },
+                    "examinerName": {
+                      "type": "string"
+                    },
+                    "recommendation": {
+                      "type": "string"
+                    },
+                    "recommendationDatetime": {
+                      "type": "string"
+                    },
+                    "irsBatchReview": {
+                      "type": "string"
+                    },
+                    "batchReviewedByIRS": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "nrelReview": {
+                  "type": "object",
+                  "required": [
+                    "examinerId",
+                    "examinerName",
+                    "batchReviewedByDOE"
+                  ],
+                  "properties": {
+                    "examinerId": {
+                      "type": "string"
+                    },
+                    "examinerName": {
+                      "type": "string"
+                    },
+                    "recommendation": {
+                      "type": "string"
+                    },
+                    "dueDate": {
+                      "type": "string"
+                    },
+                    "recommendationDatetime": {
+                      "type": "string"
+                    },
+                    "nrelBatchReview": {
+                      "type": "string"
+                    },
+                    "batchReviewedByDOE": {
+                      "type": "boolean"
+                    }
+                  }
+                },
+                "reviewDetails": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "reviewId",
+                      "reviewerId",
+                      "createdDate",
+                      "lastModifiedDate",
+                      "reviewName",
+                      "reviewer"
+                    ],
+                    "properties": {
+                      "reviewId": {
+                        "type": "string"
+                      },
+                      "reviewerId": {
+                        "type": "string"
+                      },
+                      "createdDate": {
+                        "type": "string"
+                      },
+                      "lastModifiedDate": {
+                        "type": "string"
+                      },
+                      "reviewName": {
+                        "type": "string"
+                      },
+                      "reviewer": {
+                        "type": "string"
+                      },
+                      "reviewStatus": {
+                        "type": "string"
+                      },
+                      "submittedDate": {
+                        "type": "string"
+                      },
+                      "comments": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "requirements": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "requirementId",
+                      "attachments",
+                      "createdDate",
+                      "lastModifiedDate"
+                    ],
+                    "properties": {
+                      "requirementId": {
+                        "type": "string"
+                      },
+                      "attachments": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "id",
+                            "name",
+                            "size",
+                            "createdDate",
+                            "lastModifiedDate"
+                          ],
+                          "properties": {
+                            "id": {
+                              "type": "string"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "extension": {
+                              "type": "string"
+                            },
+                            "size": {
+                              "type": "number"
+                            },
+                            "createdDate": {
+                              "type": "string"
+                            },
+                            "lastModifiedDate": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "createdDate": {
+                        "type": "string"
+                      },
+                      "lastModifiedDate": {
+                        "type": "string"
+                      },
+                      "relatedEntity": {
+                        "type": "string"
+                      },
+                      "completedDate": {
+                        "type": "string"
+                      },
+                      "dueDate": {
+                        "type": "string"
+                      },
+                      "requirements": {
+                        "type": "string"
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "applicantComment": {
+                        "type": "string"
+                      },
+                      "dateFinalReminder": {
+                        "type": "string"
+                      },
+                      "dateReminder": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
